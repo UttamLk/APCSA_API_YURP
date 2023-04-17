@@ -20,6 +20,9 @@ import org.lwjgl.opengl.XRandR;
 import static helper.Constants.*;
 //import com.mygdx.game.helper.Constants;
 
+/*
+*@author Pranav Pabbisetty
+*/
 public class GameScreen extends ScreenAdapter implements ContactListener{
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -49,7 +52,9 @@ public class GameScreen extends ScreenAdapter implements ContactListener{
 
         this.attemptCounter = 2;
     }
-
+    /*
+    *Updates the screen, takes no parameters.
+    */
     public void update(){
         world.step(1.0f/60.0f,6,2);
         cameraUpdate();
@@ -67,7 +72,9 @@ public class GameScreen extends ScreenAdapter implements ContactListener{
             won=false;
         }
     }
-
+    /*
+    *Updates the camera by moving it to the Player's position
+    */
     private void cameraUpdate(){
         Vector3 position = camera.position;
         position.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f;
@@ -75,7 +82,11 @@ public class GameScreen extends ScreenAdapter implements ContactListener{
         camera.position.set(position);
         camera.update();
     }
-
+    
+    /*
+    *Renders images on the screen
+    *@param delta Change in time.
+    */
     @Override
     public void render(float delta){
         this.update();
@@ -96,9 +107,6 @@ public class GameScreen extends ScreenAdapter implements ContactListener{
             isDead=false;
         }
 
-
-        //if(MyContactListener.checkIfDie())
-
         batch.begin();
         //render objects
 
@@ -117,6 +125,10 @@ public class GameScreen extends ScreenAdapter implements ContactListener{
         this.player = player;
     }
 
+    /*
+    *Function for checking if the player makes contact with a spike or the flag
+    *@param contact Instance of a contact between two fixtures.
+    */
     @Override
     public void beginContact(Contact contact) {
         // Get the two colliding bodies
