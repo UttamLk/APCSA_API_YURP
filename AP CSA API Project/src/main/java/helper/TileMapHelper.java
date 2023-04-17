@@ -69,9 +69,6 @@ public class TileMapHelper {
                             gameScreen.getWorld()
                     );
                     gameScreen.setPlayer(new Player(rectangle.getWidth(), rectangle.getHeight(), body));
-                    if(rectangle.getY()>640){
-                        rectangle.setPosition(PLAYER_X,PLAYER_Y);
-                    }
                 }
             }
         }
