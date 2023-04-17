@@ -4,8 +4,12 @@ This is a simple platformer game created with LibGDX. The goal of the game is to
 # Installation and Dependencies
 To run this game, you'll need to have the following installed:
 
-Java Development Kit (JDK) 8 or higher
-Gradle build tool
+- Java Development Kit (JDK) 8 or higher
+- Gradle build tool
+- LibGDX Java Game Development Framework
+- Tiled Map Editor Level Design
+
+
 Once you have these installed, you can clone this repository and build the game using the following commands:
 
 - bash
