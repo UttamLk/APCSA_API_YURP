@@ -23,7 +23,7 @@ The game is controlled using the S, D, and Space keys. The space key is used to 
 This project is open to contributions from anyone. If you find a bug or have an idea for an improvement, feel free to open an issue or submit a pull request.
 
 Credits
-This game was created by .
+This game was created by Pranav Pabbisetty, Uttam Lakumalla, Yanin Charoenpornsawat, Ryan Chakma.
 
 Version History
 Version 1.0 (April 2023): Initial release.
