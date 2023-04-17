@@ -11,7 +11,6 @@ Once you have these installed, you can clone this repository and build the game 
 - bash
 - Copy code
 - git clone [https://github.com/UttamLk/ApCSA_API_YURP]
-- 
 - cd platformer-game
 - gradlew desktop:dist
 
