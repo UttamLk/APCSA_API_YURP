@@ -22,7 +22,7 @@ import static helper.Constants.*;
 public class TileMapHelper {
     private TiledMap tiledMap;
     private GameScreen gameScreen;
-
+   
     public TileMapHelper(GameScreen gameScreen){
         this.gameScreen = gameScreen;
     }
@@ -39,6 +39,10 @@ public class TileMapHelper {
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
 
+    /*
+    *Used to iterate through every MapObject and assign properties based on name
+    *@param mapObjects an array containing mapObjects.
+    */
     private void parseMapObject(MapObjects mapObjects){
         for(MapObject mapObject : mapObjects){
             if(mapObject instanceof PolygonMapObject){
@@ -74,6 +78,10 @@ public class TileMapHelper {
         }
     }
 
+    /*
+    *Create a StaticBody
+    *@param polygonMapObject a MapObject of type Polygon.
+    */
     private void createStaticBody(PolygonMapObject polygonMapObject){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -84,6 +92,11 @@ public class TileMapHelper {
         shape.dispose();
     }
 
+    /*
+    *In the case of a special PolygonMapObject such as a flag or spike
+    *@param polygonMapObject A Polygon in the Tilemap
+    *@param density The density which you you want to assign special objects.
+    */
     private void createStaticBody(PolygonMapObject polygonMapObject, int density){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -93,6 +106,11 @@ public class TileMapHelper {
         body.createFixture(shape, density);
         shape.dispose();
     }
+    
+    /*
+    *Used to create PolygonShapes
+    *@param polygonMapObject A Polygon in the Tilemap
+    */
     private Shape createPolygonShape(PolygonMapObject polygonMapObject) {
         float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
         Vector2[] worldVertices = new Vector2[vertices.length / 2];
