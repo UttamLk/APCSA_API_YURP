@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -16,7 +17,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import core.GameScreen;
 import objects.player.Player;
 
-import static helper.Constants.PPM;
+import static helper.Constants.*;
 
 public class TileMapHelper {
     private TiledMap tiledMap;
@@ -27,7 +28,13 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setUpMap(){
-        tiledMap = new TmxMapLoader().load("Maps/map1.tmx");
+        tiledMap = new TmxMapLoader().load("Maps/map2.tmx");
+        parseMapObject(tiledMap.getLayers().get("objects").getObjects());
+        return new OrthogonalTiledMapRenderer(tiledMap);
+    }
+
+    public OrthogonalTiledMapRenderer setUpMap(String mapName){
+        tiledMap = new TmxMapLoader().load("Maps/"+mapName);
         parseMapObject(tiledMap.getLayers().get("objects").getObjects());
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
@@ -35,7 +42,17 @@ public class TileMapHelper {
     private void parseMapObject(MapObjects mapObjects){
         for(MapObject mapObject : mapObjects){
             if(mapObject instanceof PolygonMapObject){
-                createStaticBody((PolygonMapObject) mapObject);
+                PolygonMapObject mO = ((PolygonMapObject) mapObject);
+                String name = mO.getName();
+                if(name.equals("spikes")){
+                    createStaticBody((PolygonMapObject) mapObject,900);
+                }
+                else if(name.equals("flag")){
+                    createStaticBody((PolygonMapObject) mapObject,800);
+                }
+                else{
+                    createStaticBody((PolygonMapObject) mapObject);
+                }
             }
 
             if(mapObject instanceof RectangleMapObject){
@@ -52,6 +69,9 @@ public class TileMapHelper {
                             gameScreen.getWorld()
                     );
                     gameScreen.setPlayer(new Player(rectangle.getWidth(), rectangle.getHeight(), body));
+                    if(rectangle.getY()>640){
+                        rectangle.setPosition(PLAYER_X,PLAYER_Y);
+                    }
                 }
             }
         }
@@ -61,11 +81,21 @@ public class TileMapHelper {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = gameScreen.getWorld().createBody(bodyDef);
+        String name = polygonMapObject.getName();
         Shape shape = createPolygonShape(polygonMapObject);
         body.createFixture(shape, 1000);
         shape.dispose();
     }
 
+    private void createStaticBody(PolygonMapObject polygonMapObject, int density){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        Body body = gameScreen.getWorld().createBody(bodyDef);
+        String name = polygonMapObject.getName();
+        Shape shape = createPolygonShape(polygonMapObject);
+        body.createFixture(shape, density);
+        shape.dispose();
+    }
     private Shape createPolygonShape(PolygonMapObject polygonMapObject) {
         float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
         Vector2[] worldVertices = new Vector2[vertices.length / 2];
@@ -76,7 +106,7 @@ public class TileMapHelper {
         }
         PolygonShape shape = new PolygonShape();
         shape.set(worldVertices);
-        
+
         return shape;
     }
 }

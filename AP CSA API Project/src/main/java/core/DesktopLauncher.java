@@ -11,7 +11,7 @@ public class DesktopLauncher {
         config.setForegroundFPS(60);
         config.setIdleFPS(60);
         config.useVsync(true);
-        config.setTitle("core.Platformer");
+        config.setTitle("Platformer");
         config.setWindowedMode(960,640);
         //config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
         new Lwjgl3Application(new Platformer(), config);
